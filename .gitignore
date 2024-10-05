@@ -39,7 +39,3 @@ out/
 # Ignore application.properties
 src/main/resources/application.properties
 application.properties
-src/main/resources/application.properties:3
-src/main/resources/application.properties:4
-src/main/resources/application.properties:1
-src/main/resources/application.properties:2

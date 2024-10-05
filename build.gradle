@@ -31,3 +31,13 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// name of the fat jar file
+bootJar {
+	archiveFileName = "discord-bot.jar"
+}
+
+// for not creating a plain jar, without dependencies
+jar {
+	enabled = false
+}

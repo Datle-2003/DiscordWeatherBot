@@ -1,0 +1,17 @@
+.idea/
+*.iml
+*.iws
+target/
+.sonar/
+.sonarlint/
+HELP.md
+.gradle
+README.md
+### VS Code ###
+.vscode/
+.docker
+.idea
+.git*
+.dockerignore
+Dockerfile
+docker-compose.yml

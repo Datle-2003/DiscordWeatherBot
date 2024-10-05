@@ -20,37 +20,18 @@ public class ChatbotEventListener {
         ).subscribe();
     }
 
-    public Command parseCommand(String content) {
-        if (content.startsWith("!weather")) {
-            return Command.WEATHER;
-        } else if (content.startsWith("!help")) {
-            return Command.HELP;
-        } else if (content.startsWith("!alert")) {
-            return Command.ALERT;
-        } else {
-            return Command.UNKNOWN;
-        }
-    }
-
     private Mono<Void> handleMessage(MessageCreateEvent event) {
         return event.getMessage().getAuthor()
                 .filter(user -> !user.isBot())
-                .map (
-            user -> {
-                String content = event.getMessage().getContent();
-                System.out.println("Received message: " + content);
+                .map(
+                        user -> {
+                            String question = event.getMessage().getContent();
 
-                Command command = parseCommand(content);
+                            String response = weatherService.getWeather(question);
 
-                String finalResponse = switch (command) {
-                    case WEATHER -> weatherService.handleWeather(content);
-                    case HELP -> weatherService.handleHelp();
-                    case ALERT -> weatherService.handleAlert(content);
-                    default -> weatherService.handleUnknown();
-                };
-                return event.getMessage().getChannel()
-                        .flatMap(channel -> channel.createMessage(finalResponse))
-                        .then();
-            }).orElse(Mono.empty());
+                            return event.getMessage().getChannel()
+                                    .flatMap(channel -> channel.createMessage(response))
+                                    .then();
+                        }).orElse(Mono.empty());
     }
 }
